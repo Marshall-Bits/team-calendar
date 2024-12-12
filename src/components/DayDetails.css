@@ -35,13 +35,13 @@
   }
 
   ul li input[type="checkbox"] {
-    transform: scale(1.2);
+    transform: scale(1.5);
     cursor: pointer;
   }
 
   ul li.completed strong {
     text-decoration: line-through;
-    color: #888; /* Style for completed tasks */
+    color: #888; 
   }
 
   .add-task-form {
@@ -59,7 +59,7 @@
 
   .add-task-form button {
     padding: 8px;
-    background-color: #520178;
+    background-color: var(--primary-color);
     color: white;
     border-radius: 3px;
     cursor: pointer;

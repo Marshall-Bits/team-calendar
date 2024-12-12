@@ -1,6 +1,7 @@
 .calendar-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 1rem;
   gap: 1rem;
 }
@@ -13,16 +14,33 @@
   height: 100%;
 }
 
+.calendar-month-select{
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.calendar-team-select{
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .day-label {
   position: sticky;
-  top: 0;
+  top: 1rem;
   font-weight: bold;
   text-align: center;
   padding: 4px;
-  background-color: #686868;
+  background-color: var(--primary-color);
   z-index: 1;
   margin-bottom: 1rem;
-  border: 1px solid #686868;
+  color: #ffff;
+  border: 2px solid #2e2e2e;
 }
 
 .day {
@@ -36,21 +54,21 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  font-size: 1rem; 
+  font-size: 1rem;
   padding: 0 2px 2px;
   position: relative;
   overflow-y: scroll;
-  scrollbar-width: none; 
+  scrollbar-width: none;
   header {
     background-color: #2e2e2e;
-    font-size: 1rem; 
+    font-size: 1rem;
     position: sticky;
     top: 0;
   }
 }
 
 .day::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
 
 .empty {
@@ -70,7 +88,7 @@
 }
 
 .todo-item {
-  background-color: #520178;
+  background-color: var(--secondary-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -107,7 +125,7 @@
 }
 
 .btn-primary {
-  background-color: #520178;
+  background-color: var(--primary-color);
   color: #fff;
 }
 
@@ -115,6 +133,23 @@
   background-color: #fff;
   border: 2px solid #3e3e3e;
   color: #3e3e3e;
+}
+
+.btn-nextprev {
+  border: 2px solid #2e2e2e;
+  border-radius: 3px;
+  padding: 6px 8px;
+  background-color: var(--ternary-color);
+  color: var(--background-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 @keyframes fadein {
