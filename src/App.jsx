@@ -116,6 +116,8 @@ const App = () => {
         todos={todos}
         selectedTeam={selectedTeam}
         setSelectedDay={setSelectedDay}
+        fetchTodos={fetchTodos}
+        addToast={addToast}
       />
       {selectedDay && (
         <DayDetails

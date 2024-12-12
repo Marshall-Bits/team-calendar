@@ -1,10 +1,52 @@
-const Calendar = ({ currentMonth, todos, selectedTeam, setSelectedDay }) => {
+import React, { useState } from "react";
+import supabase from "../supabase/config";
+
+const Calendar = ({ currentMonth, todos, selectedTeam, setSelectedDay, fetchTodos, addToast }) => {
   const daysInMonth = (year, month) => {
     return new Date(year, month + 1, 0).getDate();
   };
 
   const firstDayOfMonth = (year, month) => {
     return (new Date(year, month, 1).getDay() + 6) % 7;
+  };
+
+  const [dragOverDay, setDragOverDay] = useState(null);
+
+  const handleDragStart = (e, todo) => {
+    e.dataTransfer.setData("todoId", todo.id);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDragEnter = (e, dayString) => {
+    e.preventDefault();
+    setDragOverDay(dayString);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setDragOverDay(null);
+  };
+
+  const handleDrop = async (e, dayString) => {
+    e.preventDefault();
+    const todoId = e.dataTransfer.getData("todoId");
+    if (todoId) {
+      const { error } = await supabase
+        .from("todos")
+        .update({ date: dayString })
+        .eq("id", todoId);
+      if (error) {
+        console.error("Error updating todo date", error);
+        addToast("Error al mover la tarea", "error");
+      } else {
+        fetchTodos();
+        addToast("Tarea movida correctamente", "success");
+      }
+    }
+    setDragOverDay(null);
   };
 
   const generateCalendar = () => {
@@ -25,11 +67,15 @@ const Calendar = ({ currentMonth, todos, selectedTeam, setSelectedDay }) => {
 
       calendarDays.push(
         <article
-          className="day"
+          className={`day ${dragOverDay === dayString ? 'drag-over' : ''}`}
           key={day}
           onClick={() =>
             selectedTeam && setSelectedDay({ date: dayString, tasks: dayTodos })
           }
+          onDragOver={handleDragOver}
+          onDragEnter={(e) => handleDragEnter(e, dayString)}
+          onDragLeave={handleDragLeave}
+          onDrop={(e) => handleDrop(e, dayString)}
         >
           <header>{day}</header>
           <div className="day-container">
@@ -37,6 +83,8 @@ const Calendar = ({ currentMonth, todos, selectedTeam, setSelectedDay }) => {
               <div
                 key={todo.id}
                 className={`todo-item ${todo.is_done && "done"}`}
+                draggable
+                onDragStart={(e) => handleDragStart(e, todo)}
               >
                 {todo.title}
               </div>
