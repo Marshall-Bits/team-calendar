@@ -1,8 +1,49 @@
-# React + Vite
+# Test Todo Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+A simple Todo application built with React for managing daily tasks in a calendar.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies
+- React
+- Supabase
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/test-todo.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+cd test-todo
+```
+
+3. Install the dependencies:
+
+```bash
+npm install
+```
+
+## Usage
+
+1. Start the development server:
+
+```bash
+npm start
+```
+
+2. Open your browser and go to `http://localhost:5173` to see the application.
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add some feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Open a pull request.
+
