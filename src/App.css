@@ -1,0 +1,140 @@
+.calendar-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  padding: 0;
+  height: 100%;
+}
+
+.day-label {
+  position: sticky;
+  top: 0;
+  font-weight: bold;
+  text-align: center;
+  padding: 4px;
+  background-color: #686868;
+  z-index: 1;
+  margin-bottom: 1rem;
+  border: 1px solid #686868;
+}
+
+.day {
+  cursor: pointer;
+  height: 7em;
+  background-color: #2e2e2e;
+  color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem; 
+  padding: 0 2px 2px;
+  position: relative;
+  overflow-y: scroll;
+  scrollbar-width: none; 
+  header {
+    background-color: #2e2e2e;
+    font-size: 1rem; 
+    position: sticky;
+    top: 0;
+  }
+}
+
+.day::-webkit-scrollbar {
+  display: none; 
+}
+
+.empty {
+  visibility: hidden;
+}
+
+.task {
+  background-color: #3e3e3e;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-left: 4px solid #ff69b4;
+  border-radius: 3px;
+}
+
+.day-container {
+  margin-top: 5px;
+}
+
+.todo-item {
+  background-color: #520178;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 2px 4px;
+  margin-bottom: 2px;
+  border-radius: 3px;
+  font-size: 0.8em;
+}
+
+.todo-item.done {
+  text-decoration: line-through;
+  background-color: #3e3e3e;
+  color: #888;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 4px;
+  color: #fff;
+  opacity: 0.9;
+  z-index: 1000;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+.toast.success {
+  background-color: #4caf50;
+}
+
+.toast.error {
+  background-color: #f44336;
+}
+
+.btn-primary {
+  background-color: #520178;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #fff;
+  border: 2px solid #3e3e3e;
+  color: #3e3e3e;
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 20px;
+    opacity: 0.9;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 20px;
+    opacity: 0.9;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
