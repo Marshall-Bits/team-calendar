@@ -13,7 +13,7 @@ A simple Todo application built with React for managing daily tasks in a calenda
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/test-todo.git
+git clone https://github.com/Marshall-Bits/test-todo.git
 ```
 
 2. Navigate to the project directory:
