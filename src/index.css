@@ -34,3 +34,7 @@ body {
   background-color: var(--background-color);
   padding: 3rem;
 }
+
+ul, ol {
+  list-style: none;
+}

@@ -69,6 +69,25 @@ const DayDetails = memo(
       [fetchTodos]
     );
 
+    const handleDelete = useCallback(
+      async (taskId) => {
+        console.log(taskId);
+        
+        const { data, error } = await supabase
+          .from("todos")
+          .delete()
+          .eq("id", taskId);
+        if (error) {
+          console.error("Error deleting task", error);
+          addToast("Error al borrar la tarea", "error");
+        } else {
+          fetchTodos();
+          addToast("Tarea eliminada correctamente 🚮", "success");
+        }
+      },
+      [fetchTodos]
+    );
+
     return (
       <div className="modal-overlay" onClick={onClose}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -105,6 +124,9 @@ const DayDetails = memo(
                         onChange={() => toggleTaskStatus(task.id, task.is_done)}
                       />
                       <strong>{task.title}</strong>: {task.description}
+                      <button onClick={() => handleDelete(task.id)}>
+                        Borrar
+                      </button>
                     </li>
                   ))}
                 </ul>

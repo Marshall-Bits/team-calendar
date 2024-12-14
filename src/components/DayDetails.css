@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 .modal-content {
@@ -41,7 +42,7 @@
 
   ul li.completed strong {
     text-decoration: line-through;
-    color: #888; 
+    color: #888;
   }
 
   .add-task-form {
@@ -83,4 +84,3 @@
   border-radius: 3px;
   cursor: pointer;
 }
-
