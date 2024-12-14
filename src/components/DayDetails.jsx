@@ -12,8 +12,6 @@ const DayDetails = memo(
     setSelectedDay,
     todos,
   }) => {
-    
-
     const [showInputs, setShowInputs] = useState(false);
     const [newTitle, setNewTitle] = useState("");
     const [newDescription, setNewDescription] = useState("");

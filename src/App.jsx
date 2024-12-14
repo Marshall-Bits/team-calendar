@@ -12,7 +12,7 @@ const App = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState("");
   const [toast, setToast] = useState({ message: "", type: "" });
-  const { teams, todos, fetchTodos } = useFetchData(selectedTeam);
+  const { teams, todos, teamMembers, fetchTodos } = useFetchData(selectedTeam);
 
   const months = Array.from({ length: 12 }, (e, i) =>
     new Date(0, i).toLocaleString("default", { month: "long" })
@@ -26,6 +26,7 @@ const App = () => {
   for (let i = STARTING_YEAR; i <= ENDING_YEAR; i++) {
     years.push(i);
   }
+
   const handleNextPrevMonth = (direction) => {
     const newMonth = new Date(
       currentMonth.getFullYear(),
@@ -80,6 +81,18 @@ const App = () => {
             <img src={rightIcon} alt="Next Month" />
           </button>
         </section>
+        <section>
+          {teamMembers.length > 0 && (
+            <>
+              <h3>Team:</h3>
+              <ul>
+                {teamMembers.map((member) => (
+                  <li key={member.id}>{member.name}</li>
+                ))}
+              </ul>
+            </>
+          )}
+        </section>
         <section className="calendar-team-select">
           <select
             value={selectedTeam}
@@ -112,6 +125,7 @@ const App = () => {
         </section>
       </div>
       <Calendar
+        teamMembers={teamMembers}
         currentMonth={currentMonth}
         todos={todos}
         selectedTeam={selectedTeam}
@@ -121,6 +135,7 @@ const App = () => {
       />
       {selectedDay && (
         <DayDetails
+          teamMembers={teamMembers}
           fetchTodos={fetchTodos}
           selectedTeam={selectedTeam}
           todos={todos}
