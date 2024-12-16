@@ -15,6 +15,7 @@ const DayDetails = memo(
     const [showInputs, setShowInputs] = useState(false);
     const [newTitle, setNewTitle] = useState("");
     const [newDescription, setNewDescription] = useState("");
+    const [taskToDelete, setTaskToDelete] = useState(null);
 
     useEffect(() => {
       const updatedDay = {
@@ -26,6 +27,11 @@ const DayDetails = memo(
     }, [todos]);
 
     const addTask = useCallback(async () => {
+      if (!newTitle) {
+        addToast("El título es obligatorio", "error");
+        return;
+      }
+      
       const { data, error } = await supabase.from("todos").insert([
         {
           title: newTitle,
@@ -69,10 +75,14 @@ const DayDetails = memo(
       [fetchTodos]
     );
 
+    const confirmDelete = (task) => {
+      setTaskToDelete(task);
+    };
+
     const handleDelete = useCallback(
       async (taskId) => {
         console.log(taskId);
-        
+
         const { data, error } = await supabase
           .from("todos")
           .delete()
@@ -80,9 +90,11 @@ const DayDetails = memo(
         if (error) {
           console.error("Error deleting task", error);
           addToast("Error al borrar la tarea", "error");
+          setTaskToDelete(null);
         } else {
           fetchTodos();
           addToast("Tarea eliminada correctamente 🚮", "success");
+          setTaskToDelete(null);
         }
       },
       [fetchTodos]
@@ -97,49 +109,91 @@ const DayDetails = memo(
               <input
                 type="text"
                 placeholder="Título"
+                required
                 value={newTitle}
+                maxLength={15}
                 onChange={(e) => setNewTitle(e.target.value)}
               />
               <input
                 type="text"
                 placeholder="Descripción"
                 value={newDescription}
+                maxLength={30}
                 onChange={(e) => setNewDescription(e.target.value)}
               />
               <button onClick={addTask}>Guardar Tarea</button>
             </div>
           ) : (
             <>
-              <h2>{selectedDay.date}</h2>
-              {selectedDay.tasks.length > 0 ? (
-                <ul>
-                  {selectedDay.tasks.map((task) => (
-                    <li
-                      key={task.id}
-                      className={task.is_done ? "completed" : ""}
+              {taskToDelete ? (
+                <div>
+                  <p>
+                    ¿Borrar la tarea <strong>{taskToDelete.title}</strong>?
+                  </p>
+                  <section className="delete-confirmation">
+                    <button
+                      className="btn-secondary"
+                      onClick={() => setTaskToDelete(null)}
                     >
-                      <input
-                        type="checkbox"
-                        checked={task.is_done}
-                        onChange={() => toggleTaskStatus(task.id, task.is_done)}
-                      />
-                      <strong>{task.title}</strong>: {task.description}
-                      <button onClick={() => handleDelete(task.id)}>
-                        Borrar
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                      Cancelar
+                    </button>
+                    <button
+                      className="btn-delete"
+                      onClick={() => handleDelete(taskToDelete.id)}
+                    >
+                      Confirmar
+                    </button>
+                  </section>
+                </div>
               ) : (
-                <p>No hay tareas para este día.</p>
+                <>
+                  <h2>{selectedDay.date}</h2>
+                  {selectedDay.tasks.length > 0 ? (
+                    <ul>
+                      {selectedDay.tasks.map((task) => (
+                        <li
+                          key={task.id}
+                          className={task.is_done ? "completed" : ""}
+                        >
+                          {
+                            <>
+                              <input
+                                type="checkbox"
+                                checked={task.is_done}
+                                onChange={() =>
+                                  toggleTaskStatus(task.id, task.is_done)
+                                }
+                              />
+                              <div className="todo-details">
+                                <strong>
+                                  {task.title}
+                                  {task.description && ":"}
+                                </strong>{" "}
+                                {task.description}
+                              </div>
+                              <button
+                                className="btn-delete"
+                                onClick={() => confirmDelete(task)}
+                              >
+                                Borrar
+                              </button>
+                            </>
+                          }
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>No hay tareas para este día.</p>
+                  )}
+                </>
               )}
             </>
           )}
           <div className="buttons-modal">
-            <button className="btn-secondary" onClick={onClose}>
-              Cerrar
+            <button className="btn-secondary btn-close" onClick={onClose}>
+              X
             </button>
-            {!showInputs && (
+            {!showInputs && !taskToDelete && (
               <button
                 className="btn-primary"
                 onClick={() => setShowInputs(true)}

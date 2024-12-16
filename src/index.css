@@ -5,6 +5,7 @@
   --primary-color: #045686;
   --ternary-color: #17afd4;
   --text-color: #49d2e2;
+  --inactive-color: #3a3a3a;
   font-family: var(--font-family);
   line-height: 1.5;
   font-weight: 400;
